@@ -25,8 +25,8 @@ juce_add_plugin(GeigerCounterPro
 
 juce_generate_juce_header(GeigerCounterPro)
 target_sources(GeigerCounterPro PRIVATE
-    Source/PluginProcessor.cpp Source/PluginProcessor.h
-    Source/PluginEditor.cpp Source/PluginEditor.h)
+    PluginProcessor.cpp PluginProcessor.h
+    PluginEditor.cpp PluginEditor.h)
 target_compile_features(GeigerCounterPro PRIVATE cxx_std_17)
 target_compile_definitions(GeigerCounterPro PUBLIC
     JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0)
