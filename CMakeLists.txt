@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(GeigerCounterPro VERSION 1.0.0)
+project(HELLFURNACE_FUZZ VERSION 1.0.0)
 
 include(FetchContent)
 FetchContent_Declare(JUCE
@@ -8,30 +8,40 @@ FetchContent_Declare(JUCE
     GIT_SHALLOW TRUE)
 FetchContent_MakeAvailable(JUCE)
 
-juce_add_plugin(GeigerCounterPro
-    COMPANY_NAME "Independent Audio Lab"
-    BUNDLE_ID "audio.independentaudiolab.geigercounterpro"
-    PLUGIN_MANUFACTURER_CODE InAL
-    PLUGIN_CODE GcP1
+juce_add_plugin(HELLFURNACE_FUZZ
+    COMPANY_NAME "Black Furnace Audio"
+    BUNDLE_ID "audio.blackfurnace.hellfurnacefuzz"
+    PLUGIN_MANUFACTURER_CODE BfAu
+    PLUGIN_CODE Hfzz
     FORMATS VST3
-    PRODUCT_NAME "Geiger Counter Pro (Behavioral)"
-    DESCRIPTION "12-bit wavetable distortion inspired by the WMD Geiger Counter Pro signal path"
+    PRODUCT_NAME "HELLFURNACE FUZZ"
+    DESCRIPTION "Extreme destructive guitar fuzz"
     IS_SYNTH FALSE
     NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE
     IS_MIDI_EFFECT FALSE
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
-    COPY_PLUGIN_AFTER_BUILD FALSE)
+    COPY_PLUGIN_AFTER_BUILD FALSE
+)
 
-juce_generate_juce_header(GeigerCounterPro)
-target_sources(GeigerCounterPro PRIVATE
-    PluginProcessor.cpp PluginProcessor.h
-    PluginEditor.cpp PluginEditor.h)
-target_compile_features(GeigerCounterPro PRIVATE cxx_std_17)
-target_compile_definitions(GeigerCounterPro PUBLIC
-    JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0)
-target_link_libraries(GeigerCounterPro PRIVATE
-    juce::juce_audio_utils juce::juce_dsp
-    PUBLIC juce::juce_recommended_config_flags
-           juce::juce_recommended_lto_flags
-           juce::juce_recommended_warning_flags)
+target_sources(HELLFURNACE_FUZZ PRIVATE
+    Source/PluginProcessor.cpp
+    Source/PluginProcessor.h
+    Source/PluginEditor.cpp
+    Source/PluginEditor.h
+)
+
+target_compile_features(HELLFURNACE_FUZZ PRIVATE cxx_std_17)
+target_compile_definitions(HELLFURNACE_FUZZ PUBLIC
+    JUCE_WEB_BROWSER=0
+    JUCE_USE_CURL=0
+    JUCE_VST3_CAN_REPLACE_VST2=0
+)
+target_link_libraries(HELLFURNACE_FUZZ PRIVATE
+    juce::juce_audio_utils
+    juce::juce_dsp
+    PUBLIC
+    juce::juce_recommended_config_flags
+    juce::juce_recommended_lto_flags
+    juce::juce_recommended_warning_flags
+)

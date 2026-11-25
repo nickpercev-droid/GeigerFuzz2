@@ -1,0 +1,38 @@
+name: Build HELLFURNACE FUZZ VST3 (Windows x64)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure MSVC
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x64
+
+      - name: Configure
+        run: cmake -S . -B build -A x64 -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build VST3
+        run: cmake --build build --config Release --target HELLFURNACE_FUZZ_VST3
+
+      - name: Package plugin
+        shell: pwsh
+        run: |
+          $plugin = Get-ChildItem -Path build -Recurse -Directory -Filter "*.vst3" | Select-Object -First 1
+          if (-not $plugin) { throw "VST3 bundle not found" }
+          Compress-Archive -Path $plugin.FullName -DestinationPath "$env:GITHUB_WORKSPACE\HELLFURNACE-FUZZ-Windows-x64.zip" -Force
+
+      - name: Upload VST3 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: HELLFURNACE-FUZZ-Windows-x64
+          path: HELLFURNACE-FUZZ-Windows-x64.zip
+          if-no-files-found: error
