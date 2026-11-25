@@ -25,10 +25,10 @@ juce_add_plugin(HELLFURNACE_FUZZ
 )
 
 target_sources(HELLFURNACE_FUZZ PRIVATE
-    Source/PluginProcessor.cpp
-    Source/PluginProcessor.h
-    Source/PluginEditor.cpp
-    Source/PluginEditor.h
+    PluginProcessor.cpp
+    PluginProcessor.h
+    PluginEditor.cpp
+    PluginEditor.h
 )
 
 target_compile_features(HELLFURNACE_FUZZ PRIVATE cxx_std_17)
